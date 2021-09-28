@@ -1,1 +1,9 @@
 .idea/
+pycache
+__pycache__
+__pycache__/
+/__pycache__/
+/mainapp/__pycache__/
+posts/__pycache__/
+posts/__pycache__/settings.cpython-39.pyc
+*/__pycache__/
