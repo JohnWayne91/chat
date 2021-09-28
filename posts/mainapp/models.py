@@ -8,10 +8,13 @@ class Post(models.Model):
     slug = models.SlugField(unique=True)
     content = models.TextField(verbose_name='Post content')
     created_at = models.DateTimeField(auto_now=True, verbose_name='Created at')
-    comments = models.ManyToManyField('Comments')
+    comments = models.ManyToManyField('Comments', blank=True)
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_slug': self.slug})
+
+    def __str__(self):
+        return self.id
 
 
 class Comments(models.Model):
@@ -19,3 +22,6 @@ class Comments(models.Model):
     text = models.TextField(verbose_name='Comment text')
     created_at = models.DateTimeField(auto_now_add=True)
     related_post = models.ForeignKey(Post, verbose_name='Related post', on_delete=models.CASCADE, related_name='post')
+
+    def __str__(self):
+        return self.text
