@@ -20,7 +20,7 @@ class Posts(models.Model):
 class Comment(models.Model):
     author = models.ForeignKey(User, verbose_name='Author', on_delete=models.CASCADE)
     text = models.TextField(verbose_name='Comment text')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now=True)
     related_post = models.ForeignKey(Posts, verbose_name='Related post', on_delete=models.CASCADE, related_name='post')
 
     def __str__(self):

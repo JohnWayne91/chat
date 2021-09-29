@@ -1,9 +1,13 @@
+from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.views import LoginView
 
 from .models import *
 
-from .forms import CommentForm
+from .forms import CommentForm, RegisterUserForm, SignInUserForm
 
 
 class PostListView(ListView):
@@ -28,17 +32,26 @@ class PostDetailView(DetailView):
 
 class CommentCreateView(CreateView):
     pass
-    # form_class = CommentForm
-    #
-    # def form_valid(self, form):
-    #     new_comment = form.save(commit=False)
-    #     post = Post.objects.get(slug=self.kwargs['slug'])
-    #     author = User.objects.get(pk=self.request.user.pk)
-    #     new_comment.author = author
-    #     new_comment.related_post = post
-    #     new_comment.save()
-    #     post.comments.add(new_comment)
-    #     return HttpResponseRedirect('post')
 
 
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'mainapp/sign_up.html'
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('posts')
+
+
+class SignInUser(LoginView):
+    form_class = SignInUserForm
+    template_name = 'mainapp/sign_in.html'
+
+    def get_success_url(self):
+        return reverse_lazy('posts')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('posts')

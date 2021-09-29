@@ -3,20 +3,20 @@
 {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'posts' %}">Назад к постам</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'posts' %}">Back to posts</a></li>
   </ol>
 </nav>
     <hr>
     <h4 class="text-center">{{ post.title }}</h4>
-    <small>опубликовано: {{ post.created_at|date:"Y-m-d" }}</small>
+    <small>Published at: {{ post.created_at|date:"Y-m-d" }}</small>
     <br><br>
     <p>{{ post.content|safe }}</p>
     <hr>
-    <p><strong>Комментарии</strong>: <span class="badge rounded-pill bg-dark">{{ post.comments.count }}</span></p>
+    <p><strong>Comments</strong>: <span class="badge rounded-pill bg-dark">{{ post.comments.count }}</span></p>
     <div class="row" id="comments-list">
         {% for comment in post.comments.all %}
             <div class="col-md-12 mt-3 mb-3">
-                <p><strong>{{ comment.author.username }}</strong> | <small>опубликовано:{{ comment.created_at|date:"Y-m-d" }}</small></p>
+                <p><strong>{{ comment.author.username }}</strong> | <small>comment left at:{{ comment.created_at|date:"Y-m-d H:m" }}</small></p>
                 <p>{{ comment.text }}</p>
             </div>
         {% endfor %}
