@@ -34,7 +34,8 @@ class CommentsConsumer(AsyncWebsocketConsumer):
         new_comment = await self.create_new_comment(comment)
         data = {'author': new_comment.author.username,
                 'created_at': new_comment.created_at.strftime('%Y-%m-%d %H:%m'),
-                'text': new_comment.text}
+                'text': new_comment.text,
+                }
         # Send message to room group
         await self.channel_layer.group_send(
             self.post_group_name,
@@ -55,11 +56,13 @@ class CommentsConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def create_new_comment(self, text):
-        post = Post.objects.get(id=self.scope['post_id'])
+        post = Posts.objects.get(pk=int(self.post_id))
 
-        new_comment = Comments.objects.create(
+        new_comment = Comment.objects.create(
             author=self.scope['user'],
             text=text,
             related_post=post,
         )
+        post.comments.add(new_comment)
         return new_comment
+

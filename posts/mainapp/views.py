@@ -8,14 +8,14 @@ from .forms import CommentForm
 
 class PostListView(ListView):
 
-    model = Post
+    model = Posts
     template_name = 'mainapp/posts.html'
     context_object_name = 'posts'
 
 
 class PostDetailView(DetailView):
 
-    model = Post
+    model = Posts
     template_name = 'mainapp/post_detail.html'
     context_object_name = 'post'
     slug_url_kwarg = 'post_slug'
