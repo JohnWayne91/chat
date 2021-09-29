@@ -13,8 +13,8 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_slug': self.slug})
 
-    def __str__(self):
-        return self.id
+    # def __str__(self):
+    #     return int(self.id)
 
 
 class Comments(models.Model):

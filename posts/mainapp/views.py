@@ -27,17 +27,18 @@ class PostDetailView(DetailView):
 
 
 class CommentCreateView(CreateView):
-    form_class = CommentForm
-
-    def form_valid(self, form):
-        new_comment = form.save(commit=False)
-        # post = Post.objects.get(slug=self.kwargs['slug'])
-        author = User.objects.get(pk=self.request.user.pk)
-        new_comment.author = author
-        # new_comment.related_post = post
-        new_comment.save()
-        # post.comments.add(new_comment)
-        return HttpResponseRedirect('post')
+    pass
+    # form_class = CommentForm
+    #
+    # def form_valid(self, form):
+    #     new_comment = form.save(commit=False)
+    #     post = Post.objects.get(slug=self.kwargs['slug'])
+    #     author = User.objects.get(pk=self.request.user.pk)
+    #     new_comment.author = author
+    #     new_comment.related_post = post
+    #     new_comment.save()
+    #     post.comments.add(new_comment)
+    #     return HttpResponseRedirect('post')
 
 
 
