@@ -33,7 +33,7 @@ class CommentsConsumer(AsyncWebsocketConsumer):
         comment = text_data_json['text']
         new_comment = await self.create_new_comment(comment)
         data = {'author': new_comment.author.username,
-                'created_at': new_comment.created_at.strftime('%Y-%m-%d %H:%m'),
+                'created_at': new_comment.created_at.strftime('%Y-%m-%d %H:%M'),
                 'text': new_comment.text,
                 }
         # Send message to room group

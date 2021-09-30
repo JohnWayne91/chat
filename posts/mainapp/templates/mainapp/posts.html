@@ -21,6 +21,9 @@
                     <a class="nav-link text-light" href="{% url 'logout' %}">Log out</a>
                 </li>
         {% endif %}
+                <li>
+                    <a class="nav-link text-light" href="{% url 'posts' %}">Home</a>
+                </li>
     </nav>
 <div class="container mt-3">
 {% block content %}

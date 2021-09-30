@@ -29,6 +29,11 @@
         <br>
     <input class="btn btn-primary" type="submit" id="send-comment" value="Отправить">
     </form>
+    {% else %}
+        <p class="text-center">Sign in to leave the comment</p>
+        <p class="text-center">
+            <button class="btn btn-primary btn-block"><a class="nav-link text-dark" href="{% url 'sign_in' %}">Sign in</a></button>
+        </p>
     {% endif %}
 
 {% endblock content %}
@@ -48,7 +53,7 @@
         commentsList.insertAdjacentHTML(
             'beforeend',
             '<div class="col-md-12 mt-3 mb-3">\n' +
-            '<p><strong>' + data['message']['author'] + '</strong> | <small>опубликовано:' + data['message']['created_at'] + '</small></p>\n' +
+            '<p><strong>' + data['message']['author'] + '</strong> | <small>Comment left at:' + data['message']['created_at'] + '</small></p>\n' +
             '<p>' + data['message']['text'] + '</p>\n' +
             '</div>'
         )
