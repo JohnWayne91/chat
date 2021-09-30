@@ -1,18 +1,18 @@
 {% extends 'mainapp/posts.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'posts' %}">Back to posts</a></li>
-  </ol>
-</nav>
+
+<style>
+    body {
+        padding-top: 56px;
+    }
+</style>
     <hr>
     <h4 class="text-center">{{ post.title }}</h4>
     <small>Published at: {{ post.created_at|date:"Y-m-d" }}</small>
     <br><br>
     <p>{{ post.content|safe }}</p>
     <hr>
-    <p><strong>Comments</strong>: <span class="badge rounded-pill bg-dark">{{ post.comments.count }}</span></p>
     <div class="row" id="comments-list">
         {% for comment in post.comments.all %}
             <div class="col-md-12 mt-3 mb-3">
@@ -68,5 +68,4 @@
         messageInputDom.value = '';
     };
 </script>
-
 {% endblock js %}
