@@ -1,4 +1,7 @@
 import json
+import asyncio
+from pytz import timezone
+from datetime import datetime
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
@@ -31,6 +34,10 @@ class CommentsConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         comment = text_data_json['text']
+        comment_delay_time_str = text_data_json['delay']
+        if comment_delay_time_str != '':
+            delay = self.get_seconds_of_delay(comment_delay_time_str)
+            await asyncio.sleep(delay)
         new_comment = await self.create_new_comment(comment)
         data = {'author': new_comment.author.username,
                 'created_at': new_comment.created_at.strftime('%Y-%m-%d %H:%M'),
@@ -53,6 +60,13 @@ class CommentsConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'message': message
         }))
+
+    @staticmethod
+    def get_seconds_of_delay(delay_time_str):
+        comment_delay = datetime.strptime(delay_time_str, "%m/%d/%Y %H:%M")
+        delay = comment_delay - datetime.now()
+        delay_in_seconds = delay.total_seconds() - 10800
+        return delay_in_seconds
 
     @database_sync_to_async
     def create_new_comment(self, text):
