@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'channels',
     'mainapp',
     'crispy_forms',
-    'rest_framework'
+    'rest_framework',
+    'bootstrap4',
+    'bootstrap_datepicker_plus'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
 
 ROOT_URLCONF = 'posts.urls'
 
@@ -138,3 +144,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
