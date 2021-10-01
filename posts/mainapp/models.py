@@ -22,6 +22,7 @@ class Comment(models.Model):
     text = models.TextField(verbose_name='Comment text')
     created_at = models.DateTimeField(auto_now=True)
     related_post = models.ForeignKey(Posts, verbose_name='Related post', on_delete=models.CASCADE, related_name='post')
+    delay = models.DateTimeField(null=True, verbose_name='Sending time', default=None)
 
     def __str__(self):
         return self.text
