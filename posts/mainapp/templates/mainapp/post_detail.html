@@ -1,5 +1,6 @@
 {% extends 'mainapp/posts.html' %}
 {% load crispy_forms_tags %}
+
 {% block content %}
 
 <style>
@@ -27,7 +28,7 @@
         {% csrf_token %}
         {{ form|crispy }}
         <br>
-    <input class="btn btn-primary" type="submit" id="send-comment" value="Отправить">
+    <input class="btn btn-primary" type="submit" id="send-comment" value="Send">
     </form>
     {% else %}
         <p class="text-center">Sign in to leave the comment</p>
@@ -67,5 +68,7 @@
         }));
         messageInputDom.value = '';
     };
+
+
 </script>
 {% endblock js %}
