@@ -1,4 +1,4 @@
-This is web app for commenting some posts in real time with django channels.
+This is web application for commenting some posts in real time with django channels.
 
 Installation instructions:
 
