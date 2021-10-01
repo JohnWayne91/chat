@@ -17,7 +17,7 @@
     <div class="row" id="comments-list">
         {% for comment in post.comments.all %}
             <div class="col-md-12 mt-3 mb-3">
-                <p><strong>{{ comment.author.username }}</strong> | <small>comment left at:{{ comment.created_at|date:"Y-m-d H:m" }}</small></p>
+                <p><strong>{{ comment.author.username }}</strong> | <small>comment left at:{{ comment.created_at|date:"Y-m-d H:i" }}</small></p>
                 <p>{{ comment.text }}</p>
             </div>
         {% endfor %}
@@ -63,10 +63,14 @@
         e.preventDefault()
         const messageInputDom = document.querySelector('#id_text');
         const text = messageInputDom.value;
+        const delayInputDom = document.querySelector('#id_delay');
+        const delay = delayInputDom.value
         commentsSocket.send(JSON.stringify({
-            'text': text
+            'text': text,
+            'delay': delay
         }));
         messageInputDom.value = '';
+        delayInputDom.value = '';
     };
 
 
