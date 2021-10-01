@@ -1,3 +1,7 @@
+This is web app for commenting some posts in real time with django channels.
+
+Installation instructions:
+
 1. Clone the project - git clone (ssh link, or https)
 2. Go to directory /chat/
 3. Install virtual environment (python3 -m venv myenv)
