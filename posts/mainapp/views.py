@@ -1,5 +1,4 @@
 from django.contrib.auth import login, logout
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView

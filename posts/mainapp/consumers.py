@@ -1,6 +1,5 @@
 import json
 import asyncio
-from pytz import timezone
 from datetime import datetime
 
 from channels.generic.websocket import AsyncWebsocketConsumer
