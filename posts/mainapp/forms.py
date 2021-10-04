@@ -7,16 +7,12 @@ from bootstrap_datepicker_plus import DateTimePickerInput
 from .models import Comment
 
 
-class DateInput(forms.DateTimeInput):
-    input_type = 'date'
-
-
 class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ('text', 'delay',)
-        widgets = {'delay': DateTimePickerInput()}
+        fields = ('text', 'comment_time',)
+        widgets = {'comment_time': DateTimePickerInput()}
 
 
 class RegisterUserForm(UserCreationForm):
