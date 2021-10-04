@@ -1,8 +1,4 @@
 import json
-<<<<<<< HEAD
-import asyncio
-=======
->>>>>>> reworking_delay
 from datetime import datetime
 
 from channels.generic.websocket import AsyncWebsocketConsumer
