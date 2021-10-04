@@ -15,9 +15,9 @@
     <p>{{ post.content|safe }}</p>
     <hr>
     <div class="row" id="comments-list">
-        {% for comment in post.comments.all %}
+        {% for comment in displayed_comments.all %}
             <div class="col-md-12 mt-3 mb-3">
-                <p><strong>{{ comment.author.username }}</strong> | <small>comment left at:{{ comment.created_at|date:"Y-m-d H:i" }}</small></p>
+                <p><strong>{{ comment.author.username }}</strong> | <small>Comment left at:{{ comment.comment_time|date:"Y-m-d H:i" }}</small></p>
                 <p>{{ comment.text }}</p>
             </div>
         {% endfor %}
@@ -50,27 +50,29 @@
     );
     commentsSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
+        const date = new Date();
         commentsList = document.getElementById('comments-list')
+        if (date > Date.parse(data['message']['comment_time'])) {
         commentsList.insertAdjacentHTML(
             'beforeend',
             '<div class="col-md-12 mt-3 mb-3">\n' +
-            '<p><strong>' + data['message']['author'] + '</strong> | <small>Comment left at:' + data['message']['created_at'] + '</small></p>\n' +
+            '<p><strong>' + data['message']['author'] + '</strong> | <small>Comment left at:' + data['message']['comment_time'] + '</small></p>\n' +
             '<p>' + data['message']['text'] + '</p>\n' +
             '</div>'
-        )
+        )}
     };
     document.querySelector('#send-comment').onclick = function(e) {
         e.preventDefault()
         const messageInputDom = document.querySelector('#id_text');
         const text = messageInputDom.value;
-        const delayInputDom = document.querySelector('#id_delay');
-        const delay = delayInputDom.value
+        const comment_timeInputDom = document.querySelector('#id_comment_time');
+        const comment_time = comment_timeInputDom.value
         commentsSocket.send(JSON.stringify({
             'text': text,
-            'delay': delay
+            'comment_time': comment_time
         }));
         messageInputDom.value = '';
-        delayInputDom.value = '';
+        comment_timeInputDom.value = '';
     };
 
 

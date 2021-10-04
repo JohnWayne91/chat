@@ -14,15 +14,14 @@ class Posts(models.Model):
         return reverse('post', kwargs={'post_slug': self.slug})
 
     def __str__(self):
-        return self.title
+        return str(self.id)
 
 
 class Comment(models.Model):
     author = models.ForeignKey(User, verbose_name='Author', on_delete=models.CASCADE)
     text = models.TextField(verbose_name='Comment text')
-    created_at = models.DateTimeField(auto_now=True)
     related_post = models.ForeignKey(Posts, verbose_name='Related post', on_delete=models.CASCADE, related_name='post')
-    delay = models.DateTimeField(null=True, verbose_name='Sending time', default=None)
+    comment_time = models.DateTimeField(null=True, verbose_name='Sending time', default=None)
 
     def __str__(self):
         return self.text

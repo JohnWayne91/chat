@@ -1,5 +1,8 @@
 import json
+<<<<<<< HEAD
 import asyncio
+=======
+>>>>>>> reworking_delay
 from datetime import datetime
 
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -33,14 +36,11 @@ class CommentsConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         comment = text_data_json['text']
-        comment_delay_time_str = text_data_json['delay']
-        if comment_delay_time_str != '':
-            delay = self.get_seconds_of_delay(comment_delay_time_str)
-            await asyncio.sleep(delay)
-        new_comment = await self.create_new_comment(comment)
+        comment_delay_time_str = text_data_json['comment_time']
+        new_comment = await self.create_new_comment(comment, comment_delay_time_str)
         data = {'author': new_comment.author.username,
-                'created_at': new_comment.created_at.strftime('%Y-%m-%d %H:%M'),
                 'text': new_comment.text,
+                'comment_time': new_comment.comment_time.strftime('%Y-%m-%d %H:%M')
                 }
         # Send message to room group
         await self.channel_layer.group_send(
@@ -60,22 +60,23 @@ class CommentsConsumer(AsyncWebsocketConsumer):
             'message': message
         }))
 
-    @staticmethod
-    def get_seconds_of_delay(delay_time_str):
-        comment_delay = datetime.strptime(delay_time_str, "%m/%d/%Y %H:%M")
-        delay = comment_delay - datetime.now()
-        delay_in_seconds = delay.total_seconds() - 10800
-        return delay_in_seconds
-
     @database_sync_to_async
-    def create_new_comment(self, text):
+    def create_new_comment(self, text, comment_delay_time_str):
         post = Posts.objects.get(pk=int(self.post_id))
-
-        new_comment = Comment.objects.create(
-            author=self.scope['user'],
-            text=text,
-            related_post=post,
-        )
+        if comment_delay_time_str == '':
+            new_comment = Comment.objects.create(
+                author=self.scope['user'],
+                text=text,
+                related_post=post,
+                comment_time=datetime.now()
+            )
+        else:
+            new_comment = Comment.objects.create(
+                author=self.scope['user'],
+                text=text,
+                related_post=post,
+                comment_time=datetime.strptime(comment_delay_time_str, "%m/%d/%Y %H:%M")
+            )
         post.comments.add(new_comment)
         return new_comment
 
