@@ -1,9 +1,10 @@
 from django.contrib.auth import login, logout
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
+
+from datetime import datetime
 
 from .models import *
 
@@ -26,7 +27,10 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        post = Posts.objects.get(slug=self.kwargs['post_slug'])
+        displayed_comments = Comment.objects.filter(comment_time__lte=datetime.now(), related_post=post).order_by('comment_time')
         context['form'] = CommentForm(self.request.POST or None)
+        context['displayed_comments'] = displayed_comments
         return context
 
 
