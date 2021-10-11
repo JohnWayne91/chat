@@ -8,7 +8,6 @@ class Posts(models.Model):
     slug = models.SlugField(unique=True)
     content = models.TextField(verbose_name='Post content')
     created_at = models.DateTimeField(auto_now=True, verbose_name='Created at')
-    comments = models.ManyToManyField('Comment', blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_slug': self.slug})
