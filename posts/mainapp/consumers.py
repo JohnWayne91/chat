@@ -73,6 +73,5 @@ class CommentsConsumer(AsyncWebsocketConsumer):
                 related_post=post,
                 comment_time=datetime.strptime(comment_delay_time_str, "%m/%d/%Y %H:%M")
             )
-        post.comments.add(new_comment)
         return new_comment
 
